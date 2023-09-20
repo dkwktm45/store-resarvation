@@ -1,4 +1,4 @@
-package com.task.domain.domain;
+package com.task.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,14 +16,14 @@ import java.util.Date;
 public class Reservation {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long reservationID;
+  private Long reservationId;
 
   @ManyToOne
-  @JoinColumn(name = "userID")
+  @JoinColumn(name = "userId")
   private User user;
 
   @ManyToOne
-  @JoinColumn(name = "storeID")
+  @JoinColumn(name = "storeId")
   private Store store;
 
   private Date reservationTime;

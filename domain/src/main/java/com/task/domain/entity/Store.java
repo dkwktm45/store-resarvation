@@ -1,4 +1,4 @@
-package com.task.domain.domain;
+package com.task.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +16,7 @@ import java.util.List;
 public class Store {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long storeID;
+  private Long storeId;
   private String storeName;
   private String storeLocation;
   private String storeDescription;
@@ -25,7 +25,7 @@ public class Store {
   private Integer reviewCount;
 
   @ManyToOne
-  @JoinColumn(name = "partnerID")
+  @JoinColumn(name = "partnerId")
   private Partner partner;
 
   @OneToMany(mappedBy = "store")

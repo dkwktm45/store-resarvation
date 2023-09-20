@@ -1,4 +1,4 @@
-package com.task.domain.domain;
+package com.task.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,24 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Visit {
+public class Review {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long visitID;
+  private Long reviewID;
 
-  @OneToOne
-  @JoinColumn(name = "reservationID")
-  private Reservation reservation;
+  @ManyToOne
+  @JoinColumn(name = "userId")
+  private User user;
 
-  private Date checkInTime;
-  private Date checkOutTime;
+  @ManyToOne
+  @JoinColumn(name = "storeId")
+  private Store store;
 
-  // getters and setters
+  private Double rating;
+  private String comment;
+
 }

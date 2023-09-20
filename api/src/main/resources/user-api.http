@@ -1,0 +1,21 @@
+
+### 회원가입
+POST http://localhost:8080/join
+Content-Type: application/json
+
+{
+  "email": "wpekdl153@gmail.com",
+  "password": "1",
+  "userName" : "이진영",
+  "userType": "USER"
+}
+### 회원가입
+POST http://localhost:8080/join
+Content-Type: application/json
+
+{
+  "email": "wpekdl@gmail.com",
+  "password": "1",
+  "userName" : "이진영",
+  "userType": "ADMIN"
+}

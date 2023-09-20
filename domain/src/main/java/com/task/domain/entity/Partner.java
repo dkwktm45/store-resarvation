@@ -1,4 +1,4 @@
-package com.task.domain.domain;
+package com.task.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +16,7 @@ import java.util.List;
 public class Partner {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long partnerID;
+  private Long partnerId;
   private String partnerName;
   private String partnerLocation;
   private String partnerDescription;
