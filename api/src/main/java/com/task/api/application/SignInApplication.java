@@ -2,10 +2,13 @@ package com.task.api.application;
 
 import com.task.api.dto.RequestUser;
 import com.task.api.service.UserService;
-import com.task.common.config.JwtAuthenticationProvider;
+import com.task.common.jwt.JwtAuthenticationProvider;
+import com.task.common.jwt.RefreshTokenService;
 import com.task.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 
 @RequiredArgsConstructor
@@ -13,9 +16,23 @@ import org.springframework.stereotype.Service;
 public class SignInApplication {
   private final UserService userService;
   private final JwtAuthenticationProvider provider;
-  public String userLoginToken(RequestUser.Login req) {
+  private final RefreshTokenService refreshTokenService;
+
+  public HashMap<String,String> userLoginToken(RequestUser.Login req) {
     User user = userService.findValidCustomer(req.getEmail(), req.getPassword());
-    return provider.createToken(user.getUserId(),user.getEmail(),
+
+    String accessToken = provider.createToken(user.getUserId(),user.getEmail(),
         user.getUserType());
+    String refreshToekn = provider.createRefreshToken();
+
+    refreshTokenService.saveTokenInfo(user.getUserId(),refreshToekn,accessToken);
+    HashMap<String,String> map = new HashMap<>();
+    map.put("accessToken", accessToken);
+    map.put("refreshToken", refreshToekn);
+    return map;
+  }
+
+  public void deleteToken(String accessToken) {
+    refreshTokenService.removeRefreshToken(accessToken);
   }
 }

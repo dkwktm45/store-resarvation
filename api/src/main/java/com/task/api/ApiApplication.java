@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableFeignClients
 @EntityScan(basePackages = {"com.task.domain.entity"})
 @ComponentScan(basePackages = {"com.task"})
-@EnableJpaRepositories(basePackages = {"com.task.domain.repository"})
+@EnableJpaRepositories(basePackages = {"com.task.*.repository"})
 public class ApiApplication {
   public static void main(String[] args) {
     SpringApplication.run(ApiApplication.class, args);

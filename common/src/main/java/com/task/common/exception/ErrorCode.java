@@ -15,6 +15,7 @@ public enum ErrorCode {
   //로그인
   EXPIRED_CODE(HttpStatus.BAD_REQUEST,"인증 시간이 만료 됐습니다."),
   NOT_EQUALS_CODE(HttpStatus.BAD_REQUEST,"잘못된 인증 시도입니다."),
+  NOT_FOUND_TOKEN(HttpStatus.BAD_REQUEST,"토큰을 가지고 있지 않는 사용자입니다."),
   NOT_VALID_ACCOUNT(HttpStatus.BAD_REQUEST,"인증되지 않은 회원입니다."),
   LOGIN_CHECK_VALID(HttpStatus.BAD_REQUEST,"아이디와 패스워드를 확인해주세요."),
 

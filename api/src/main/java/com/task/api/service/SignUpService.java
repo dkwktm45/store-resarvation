@@ -23,6 +23,7 @@ public class SignUpService {
         User.builder()
             .userName(request.getUserName())
             .userType(request.getUserType())
+            .valid(request.getValid())
             .email(request.getEmail())
             .password(request.getPassword()).build()
     );
