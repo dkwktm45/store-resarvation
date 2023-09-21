@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class RefreshTokenService {
   private final RedisClient redisClient;
   @Transactional
-  public void saveTokenInfo(Long userId, String refreshToken,
-                            String accessToken) {
+  public void saveTokenInfo(Long userId, String accessToken,
+                            String refreshToken) {
     redisClient.put(accessToken, new RefreshToken(String.valueOf(userId),
         refreshToken,
         accessToken));

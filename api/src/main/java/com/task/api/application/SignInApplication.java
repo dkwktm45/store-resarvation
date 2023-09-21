@@ -18,17 +18,17 @@ public class SignInApplication {
   private final JwtAuthenticationProvider provider;
   private final RefreshTokenService refreshTokenService;
 
-  public HashMap<String,String> userLoginToken(RequestUser.Login req) {
+  public HashMap<String, String> userLoginToken(RequestUser.Login req) {
     User user = userService.findValidCustomer(req.getEmail(), req.getPassword());
 
-    String accessToken = provider.createToken(user.getUserId(),user.getEmail(),
+    String accessToken = provider.createToken(user.getUserId(), user.getEmail(),
         user.getUserType());
-    String refreshToekn = provider.createRefreshToken();
+    String refreshToken = provider.createRefreshToken();
 
-    refreshTokenService.saveTokenInfo(user.getUserId(),refreshToekn,accessToken);
-    HashMap<String,String> map = new HashMap<>();
+    refreshTokenService.saveTokenInfo(user.getUserId(), accessToken, refreshToken);
+    HashMap<String, String> map = new HashMap<>();
     map.put("accessToken", accessToken);
-    map.put("refreshToken", refreshToekn);
+    map.put("refreshToken", refreshToken);
     return map;
   }
 

@@ -28,13 +28,17 @@ public class JwtAuthenticationFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     HttpServletRequest req = (HttpServletRequest) request;
 
-    if (((HttpServletRequest) request).getRequestURI().startsWith("/store")) {
+    if (req.getRequestURI().startsWith("/reservation")) {
       String token = req.getHeader("authorization");
       if (token != null) {
         log.info("filter do auth");
         if (!provider.validationToken(token)) {
           RefreshToken refreshUser = redisClient.get(token,
               RefreshToken.class);
+
+          if (refreshUser == null) {
+            throw new CustomException(EXPIRED_TOKEN);
+          }
           String refreshToken = refreshUser.getRefreshToken();
 
           if (!provider.validationToken(refreshToken)) {
@@ -51,7 +55,7 @@ public class JwtAuthenticationFilter implements Filter {
 
             res.setHeader("authorization", accessToken);
           } else {
-            throw new CustomException(EXPIRED_CODE);
+            throw new CustomException(EXPIRED_TOKEN);
           }
         }
       } else {

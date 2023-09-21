@@ -50,4 +50,8 @@ public class User {
     this.verificationCode = code;
     this.verifyExpiredAt = date.plusDays(1);
   }
+
+  public void changeValidUser() {
+    this.valid = true;
+  }
 }

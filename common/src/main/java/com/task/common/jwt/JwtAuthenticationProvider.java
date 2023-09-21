@@ -42,12 +42,12 @@ public class JwtAuthenticationProvider {
           .parseClaimsJws(token);
       if (!claimsJws.getBody().getExpiration().before(new Date())) {
         return true;
-      } else {
-        return false;
       }
     } catch (Exception e) {
-      throw new CustomException(ErrorCode.NOT_EQUALS_CODE);
+      log.warn("Expired Token Exception");
+      return false;
     }
+    return false;
   }
 
   public TokenUser getUserVo(String token) {

@@ -26,7 +26,7 @@ public class SignInController {
 
   @PostMapping("/logout")
   public ResponseEntity<Void> logoutRequest(
-      @RequestHeader("AUTH-TOKEN") String accessToken
+      @RequestHeader("authorization") String accessToken
   ) {
     signInApplication.deleteToken(accessToken);
     return ResponseEntity.ok().build();

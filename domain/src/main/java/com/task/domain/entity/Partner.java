@@ -18,11 +18,8 @@ public class Partner {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long partnerId;
   private String partnerName;
-  private String partnerLocation;
-  private String partnerDescription;
+  private String partnerEmail;
 
   @OneToMany(mappedBy = "partner")
   private List<Store> stores;
-
-  // getters and setters
 }

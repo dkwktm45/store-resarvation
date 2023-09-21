@@ -19,7 +19,7 @@ public class UserService {
     User user = userRepository.findByEmailAndPassword(email, password)
         .orElseThrow(() -> new CustomException(NOT_COLLECT_ACCOUNT));
 
-    if (user.getValid()) {
+    if (!user.getValid()) {
       throw new CustomException(NOT_VALID_ACCOUNT);
     }
     return user;

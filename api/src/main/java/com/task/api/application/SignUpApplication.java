@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.task.api.dto.message.ResponseType.JOIN_ADMIN;
 import static com.task.api.dto.message.ResponseType.JOIN_USER;
 import static com.task.common.exception.ErrorCode.NOT_FOUND_ACCOUNT;
+import static com.task.common.exception.ErrorCode.NOT_VALID_JOIN;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +28,6 @@ public class SignUpApplication {
     }
     User responseUser = signUpService.createUser(user);
     if (responseUser.getUserType().equals(UserType.USER)) {
-
       String code = getRandomCode();
       mailgunClient.sendMail(SendMailgun.builder()
           .from("reservatation@gmail.com")
@@ -39,8 +38,8 @@ public class SignUpApplication {
           .build());
       signUpService.changeUserValidateEmail(responseUser, code);
       return JOIN_USER.getMessage();
-    } else {
-      return JOIN_ADMIN.getMessage();
+    }  else {
+      throw new CustomException(NOT_VALID_JOIN);
     }
   }
 
@@ -53,7 +52,13 @@ public class SignUpApplication {
 
     return builder.append("Hello")
         .append(name).append("! Please click link for verification.")
-        .append("http://localhost:8080/signup/user/verify?email" +
+        .append("http://localhost:8080/join/validate?email" +
             "=").append(email).append("&code=").append(code).toString();
+  }
+
+  public String validCode(String email,String code) {
+    signUpService.validUser(email, code);
+
+    return "인증이 성공했습니다.";
   }
 }
