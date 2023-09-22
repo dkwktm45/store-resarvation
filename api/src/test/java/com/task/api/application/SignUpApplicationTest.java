@@ -31,6 +31,20 @@ class SignUpApplicationTest {
 
   @InjectMocks
   private SignUpApplication signUpApplication;
+  @Test
+  void signUpValidUser_success() {
+    // given
+    String email = "wwww@naver.com";
+    String code = "wdawd";
+    doNothing().when(signUpService).validUser(anyString(), anyString());
+
+    // when
+    String message = signUpApplication.validCode(email,code);
+
+    // then
+    verify(signUpService).validUser(anyString(), anyString());
+    assertEquals(message,"인증이 성공했습니다.");
+  }
 
   @Test
   void signUpUser() {

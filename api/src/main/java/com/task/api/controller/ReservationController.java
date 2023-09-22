@@ -7,14 +7,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reservation")
 @RestController
 @RequiredArgsConstructor
-public class StoreController {
+public class ReservationController {
 
   private final RefreshTokenService refreshTokenService;
-  @PostMapping("/logout")
-  public void logoutRequest(
-      @RequestHeader("authorization") String accessToken
-  ) {
-    refreshTokenService.removeRefreshToken(accessToken);
-  }
+
 
 }

@@ -18,7 +18,7 @@ import java.io.IOException;
 import static com.task.common.exception.ErrorCode.*;
 
 @Slf4j
-@Component
+@Component("jwtAuthenticationFilter")
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter implements Filter {
   private final JwtAuthenticationProvider provider;

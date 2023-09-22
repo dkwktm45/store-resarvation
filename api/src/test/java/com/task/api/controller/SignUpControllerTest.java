@@ -10,22 +10,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.task.api.dto.message.ResponseType.JOIN_ADMIN;
 import static com.task.api.dto.message.ResponseType.JOIN_USER;
 import static com.task.common.exception.ErrorCode.REQUEST_BAD;
 import static com.task.domain.type.UserType.ADMIN;
+import static com.task.domain.type.UserType.USER;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureDataJpa
-@WebMvcTest(SignUpController.class)
+@WebMvcTest(value = SignUpController.class)
 public class SignUpControllerTest {
 
   @Autowired
@@ -37,6 +40,27 @@ public class SignUpControllerTest {
   @Autowired
   private ObjectMapper objectMapper;
 
+  @MockBean // 빈 주입
+  private RedisConnectionFactory redisConnectionFactory;
+  @Test
+  @DisplayName("회원 인증 요청 - 성공")
+  void validUserRequest() throws Exception{
+    // given
+    String email = "wwww@naver.com";
+    String code = "wdawd";
+    String answer = "인증이 성공했습니다.";
+    given(signUpApplication.validCode(any(), any()))
+        .willReturn(answer);
+
+    // when && then
+    mockMvc.perform(get(
+        String.format("/join/validate?email={}&code={}", email, code))
+            .contentType(APPLICATION_JSON)
+            .accept(APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$").value(answer))
+        .andDo(print());
+  }
   @Test
   @DisplayName("일반 유저 회원가입 요청")
   void joinUserRequest() throws Exception {
@@ -60,6 +84,10 @@ public class SignUpControllerTest {
   void badNotBlankRequest() throws Exception {
     // given
     CreateUser.Request req = CreateUser.Request.builder()
+        .userType(USER)
+        .password("")
+        .email("wpekdl1@naver.comc")
+        .userName("테스트유저")
         .build();
     String content = objectMapper.writeValueAsString(req);
 
