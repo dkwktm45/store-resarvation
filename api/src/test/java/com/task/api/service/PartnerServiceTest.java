@@ -35,7 +35,7 @@ class PartnerServiceTest {
         .partnerName(partner.getPartnerName())
         .build();
 
-    when(userRepository.findByEmailExists(partner.getEmail()))
+    when(userRepository.existsByEmail(partner.getEmail()))
         .thenReturn(true);
     when(partnerRepository.save(savePartner));
     // when
@@ -49,7 +49,7 @@ class PartnerServiceTest {
     // given
     CreatePartner.Request partner = Helper.createPartnerRequest();
 
-    when(userRepository.findByEmailExists(partner.getEmail()))
+    when(userRepository.existsByEmail(partner.getEmail()))
         .thenReturn(false);
     // when
 

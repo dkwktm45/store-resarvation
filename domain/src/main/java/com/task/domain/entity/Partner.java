@@ -1,5 +1,6 @@
 package com.task.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Getter
@@ -20,6 +23,7 @@ public class Partner {
   private String partnerName;
   private String partnerEmail;
 
-  @OneToMany(mappedBy = "partner")
+  @JsonManagedReference
+  @OneToMany(mappedBy = "partner" , cascade = ALL)
   private List<Store> stores;
 }

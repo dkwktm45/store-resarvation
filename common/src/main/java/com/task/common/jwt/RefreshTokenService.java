@@ -13,9 +13,10 @@ public class RefreshTokenService {
   @Transactional
   public void saveTokenInfo(Long userId, String accessToken,
                             String refreshToken) {
-    redisClient.put(accessToken, new RefreshToken(String.valueOf(userId),
-        refreshToken,
-        accessToken));
+    redisClient.put(accessToken, RefreshToken.builder()
+        .refreshToken(refreshToken)
+        .accessToken(accessToken)
+        .id(userId.toString()).build());
   }
 
   @Transactional
