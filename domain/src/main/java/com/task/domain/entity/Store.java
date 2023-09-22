@@ -27,15 +27,14 @@ public class Store {
   @ColumnDefault("0")
   private Integer availableSeats;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JsonBackReference
-  @JoinColumn(name = "partnerId")
-  private Partner partner;
-
   @OneToMany(mappedBy = "store")
   private List<Reservation> reservations;
 
   @OneToMany(mappedBy = "store")
   private List<Review> reviews;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JsonBackReference
+  @JoinColumn(name = "partnerId")
+  private Partner partner;
 }

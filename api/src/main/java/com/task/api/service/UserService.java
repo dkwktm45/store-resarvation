@@ -1,6 +1,7 @@
 package com.task.api.service;
 
 import com.task.common.exception.CustomException;
+import com.task.common.exception.ErrorCode;
 import com.task.domain.entity.User;
 import com.task.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,9 @@ public class UserService {
       throw new CustomException(NOT_VALID_ACCOUNT);
     }
     return user;
+  }
+  public User getUserId(Long userId) {
+    return userRepository.findById(userId)
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
   }
 }

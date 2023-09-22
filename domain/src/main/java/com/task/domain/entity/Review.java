@@ -27,5 +27,4 @@ public class Review {
 
   private Double rating;
   private String comment;
-
 }

@@ -21,6 +21,7 @@ public class StoreDto {
   private String storeDescription;
   @Min(1)
   private Integer totalSeats;
+  @Min(0)
   private Integer availableSeats;
   @Getter
   @Builder
@@ -33,6 +34,6 @@ public class StoreDto {
     private Integer totalSeats;
     private Integer availableSeats;
     private Integer reviewSize;
-    private Integer addedSeats;
+    private Integer reservationsSize;
   }
 }

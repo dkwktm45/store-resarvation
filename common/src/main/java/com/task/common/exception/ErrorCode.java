@@ -25,6 +25,7 @@ public enum ErrorCode {
 
   // 스토어
   STORE_EXIST(BAD_REQUEST, "이미 존재하는 상호명입니다."),
+  STORE_NOT_FOUND(BAD_REQUEST, "존재하지 않는 상호명입니다."),
 
   // 파트너
   PARTNER_NOT_EXIST(BAD_REQUEST, "유요한 파트너가 아닙니다."),

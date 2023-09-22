@@ -19,7 +19,7 @@ import static com.task.common.exception.ErrorCode.STORE_REG_ONE;
 @RequiredArgsConstructor
 public class PartnerApplication {
   private final PartnerService partnerService;
-  private final com.task.api.service.StoreService StoreService;
+  private final com.task.api.service.StoreService storeService;
   @Transactional
   public Store registStore(CreatePartner.Store req) {
     Partner partner = partnerService.getPartner(req.getEmail());
@@ -30,16 +30,19 @@ public class PartnerApplication {
     }
     StoreDto storeDto = storeDtos.get(0);
 
-    if (StoreService.nameExist(storeDto.getStoreName())) {
+    if (storeService.nameExist(storeDto.getStoreName())) {
       throw new CustomException(STORE_EXIST);
     }
     Store store = Store.builder()
         .partner(partner)
         .storeDescription(storeDto.getStoreDescription())
         .storeName(storeDto.getStoreName())
+        .availableSeats(storeDto.getAvailableSeats())
         .storeLocation(storeDto.getStoreLocation())
         .totalSeats(storeDto.getTotalSeats())
         .build();
+
+    storeService.saveStore(store);
     partner.getStores().add(store);
     return store;
   }

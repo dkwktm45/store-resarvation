@@ -1,12 +1,13 @@
 package com.task.domain.entity;
 
+import com.task.domain.type.ResType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,12 +27,11 @@ public class Reservation {
   @JoinColumn(name = "storeId")
   private Store store;
 
-  private Date reservationTime;
-  private String status;
-  private Integer reservedSeats;
+  private LocalDateTime reservationTime;
 
-  @OneToOne(mappedBy = "reservation")
-  private Visit visit;
+  @Enumerated(value = EnumType.STRING)
+  private ResType status;
 
-  // getters and setters
+  private String reservationCode;
+
 }
