@@ -1,4 +1,4 @@
-package com.task.common.util;
+package com.task.redis.util;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 

@@ -33,5 +33,4 @@ public class Reservation {
   private ResType status;
 
   private String reservationCode;
-
 }

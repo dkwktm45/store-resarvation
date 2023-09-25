@@ -1,4 +1,4 @@
-package com.task.common.dto;
+package com.task.redis.jwt.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

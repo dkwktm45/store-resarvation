@@ -1,10 +1,7 @@
-package com.task.common.jwt;
+package com.task.redis.jwt;
 
-import com.task.common.dto.TokenUser;
-import com.task.common.exception.CustomException;
-import com.task.common.exception.ErrorCode;
-import com.task.common.util.Aes256Util;
-import com.task.domain.type.UserType;
+import com.task.redis.jwt.dto.TokenUser;
+import com.task.redis.util.Aes256Util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -22,7 +19,7 @@ public class JwtAuthenticationProvider {
   private final long REFRESH_VALID_TIME = 1000 * 60 * 60 * 24 * 3;
   private final long ACCESS_VALID_TIME = 60 * 10000;
 
-  public String createToken(Long userPk, String email, UserType userType) {
+  public String createToken(Long userPk, String email, String userType) {
     Claims claims = Jwts.claims().setSubject(Aes256Util.encrypt(email))
         .setId(Aes256Util.encrypt(userPk.toString()));
 

@@ -1,7 +1,7 @@
-package com.task.common.jwt;
+package com.task.redis.jwt;
 
-import com.task.common.client.RedisClient;
-import com.task.common.dto.RefreshToken;
+import com.task.redis.jwt.client.RedisClient;
+import com.task.redis.jwt.dto.RefreshToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

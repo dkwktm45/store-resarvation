@@ -1,14 +1,16 @@
-package com.task.common.client;
+package com.task.redis.jwt.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.task.common.dto.RefreshToken;
 import com.task.common.exception.CustomException;
-import com.task.common.exception.ErrorCode;
+import com.task.redis.jwt.dto.RefreshToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.ObjectUtils;
+
+import static com.task.common.exception.ErrorCode.NOT_FOUND_USER;
+
 @RequiredArgsConstructor
 @Slf4j
 public class RedisClient {
@@ -41,7 +43,7 @@ public class RedisClient {
     try{
       redisTemplate.opsForValue().set(key, mapper.writeValueAsString(refreshToken));
     } catch (JsonProcessingException e) {
-      throw new CustomException(ErrorCode.NOT_FOUND_USER);
+      throw new CustomException(NOT_FOUND_USER);
     }
   }
 

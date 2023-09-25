@@ -2,4 +2,5 @@ rootProject.name = 'task'
 include 'domain'
 include 'api'
 include 'common'
+include 'notification'
 

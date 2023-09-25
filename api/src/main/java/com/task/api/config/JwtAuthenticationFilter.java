@@ -1,9 +1,9 @@
 package com.task.api.config;
 
-import com.task.common.client.RedisClient;
-import com.task.common.dto.RefreshToken;
+import com.task.redis.jwt.client.RedisClient;
+import com.task.redis.jwt.dto.RefreshToken;
 import com.task.common.exception.CustomException;
-import com.task.common.jwt.JwtAuthenticationProvider;
+import com.task.redis.jwt.JwtAuthenticationProvider;
 import com.task.domain.entity.User;
 import com.task.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter implements Filter {
                 .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
 
             String accessToken =
-                provider.createToken(user.getUserId(), user.getEmail(), user.getUserType());
+                provider.createToken(user.getUserId(), user.getEmail(), user.getUserType().name());
 
             redisClient.delete(refreshUser.getAccessToken());
             redisClient.put(accessToken, new RefreshToken(String.valueOf(user.getUserId()),

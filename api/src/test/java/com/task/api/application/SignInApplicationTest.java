@@ -3,8 +3,8 @@ package com.task.api.application;
 import com.task.api.dto.RequestUser;
 import com.task.api.service.UserService;
 import com.task.api.testObject.Helper;
-import com.task.common.jwt.JwtAuthenticationProvider;
-import com.task.common.jwt.RefreshTokenService;
+import com.task.redis.jwt.JwtAuthenticationProvider;
+import com.task.redis.jwt.RefreshTokenService;
 import com.task.domain.entity.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,8 @@ class SignInApplicationTest {
     RequestUser.Login req = Helper.createLoginUser();
     when(userService.findValidCustomer(user.getEmail(), user.getPassword()))
         .thenReturn(user);
-    when(provider.createToken(user.getUserId(),user.getEmail(),user.getUserType()))
+    when(provider.createToken(user.getUserId(),user.getEmail(),
+        user.getUserType().name()))
         .thenReturn("testAccessToken");
     when(provider.createRefreshToken())
         .thenReturn("testRefreshToken");

@@ -1,6 +1,6 @@
 package com.task.api.config;
 
-import com.task.common.client.RedisClient;
+import com.task.redis.jwt.client.RedisClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
