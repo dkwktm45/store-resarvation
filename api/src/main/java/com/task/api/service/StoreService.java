@@ -3,6 +3,7 @@ package com.task.api.service;
 import com.task.api.dto.StoreDto;
 import com.task.common.exception.CustomException;
 import com.task.common.exception.ErrorCode;
+import com.task.domain.entity.Partner;
 import com.task.domain.entity.Store;
 import com.task.domain.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class StoreService {
     return storeRepository.findByStoreName(storeName)
         .orElseThrow(() -> new CustomException(ErrorCode.STORE_NOT_FOUND));
   }
-  public List<StoreDto> getList(Pageable pageable) {
+  public List<StoreDto> getStoreList(Pageable pageable) {
     List<Store> stores = storeRepository.findAll(pageable).getContent();
     if (!stores.isEmpty()) {
       return stores.stream().map(store ->
@@ -41,16 +42,18 @@ public class StoreService {
                   .build())
           .collect(Collectors.toList());
     }
-
     return null;
   }
-
+  public Store getReservationList(Partner partner) {
+    Store stores = storeRepository.findByPartner(partner)
+        .orElseThrow(() -> new CustomException(STORE_NOT_FOUND));
+    return stores;
+  }
   public StoreDto.Detail getDetail(String storeName) {
     Store store = storeRepository.findByStoreName(storeName)
         .orElseThrow(() -> new CustomException(STORE_NOT_FOUND));
 
     int reviewSize = storeRepository.getReviewCountByStore(store);
-    // todo 다른 방법을 찾아보자 -> 어차피 예약은 사라지니깐? 굳이 Entity로 만들어져야 하나?
     int currentReservation = storeRepository.getReservationCountByStore(store);
 
     return StoreDto.Detail.builder()

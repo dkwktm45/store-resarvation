@@ -31,9 +31,10 @@ public class ReservationApplication {
     User user = userService.getUserId(req.getUserId());
     Store store = storeService.getNameStore(req.getStoreName());
 
+    Reservation response;
 
     if (req.getCurrentSeat() < req.getMaxSeat()) {
-      Reservation response = reservationService.saveUseReservation(
+      response = reservationService.saveUseReservation(
           Reservation.createEntityAll(user, store, ResType.WAITING)
       );
 
@@ -44,17 +45,17 @@ public class ReservationApplication {
           .message(SUCCESS_MESSAGE.getMessage())
           .build();
     }else{
-      Reservation response = reservationService.saveUseReservation(
+      response = reservationService.saveUseReservation(
           Reservation.createEntityAll(user, store, ResType.REFUSE)
       );
 
-      return ReservationDto.Response.builder()
-          .storeName(store.getStoreName())
-          .reservationId(response.getReservationId())
-          .reservationCode(response.getReservationCode())
-          .message(CONTINUE_MESSAGE.getMessage())
-          .build();
     }
+    return ReservationDto.Response.builder()
+        .storeName(store.getStoreName())
+        .reservationId(response.getReservationId())
+        .reservationCode(response.getReservationCode())
+        .message(CONTINUE_MESSAGE.getMessage())
+        .build();
   }
   @Transactional
   public String useRequest(Long reservationId, String code) {
@@ -66,5 +67,9 @@ public class ReservationApplication {
       reservationStore.increaseUser();
       return ADMISSION_IS_POSSIBLE.getMessage();
     }
+  }
+
+  public void refuseReservation(Long id) {
+    reservationService.refuse(id);
   }
 }

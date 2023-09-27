@@ -38,4 +38,13 @@ public class ReservationService {
     }
     return reservation;
   }
+
+  @Transactional
+  public void refuse(Long id) {
+    Reservation reservation = reservationRepository.findById(id)
+        .orElseThrow(() -> new CustomException(RESERVATION_NOT_FOUND));
+    if (reservation.getStatus().equals(REFUSE)) {
+      reservation.changeSuccess();
+    }
+  }
 }

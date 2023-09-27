@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static com.task.domain.type.ResType.WAITING;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -53,5 +55,9 @@ public class Reservation {
 
   private static String getRandomCode() {
     return UUID.randomUUID().toString().substring(0, 5);
+  }
+
+  public void changeSuccess() {
+    this.status = WAITING;
   }
 }

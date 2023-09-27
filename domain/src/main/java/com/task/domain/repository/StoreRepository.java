@@ -1,5 +1,6 @@
 package com.task.domain.repository;
 
+import com.task.domain.entity.Partner;
 import com.task.domain.entity.Store;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,6 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
 
   @Query("SELECT COUNT(r) FROM Reservation r WHERE r.store = :store")
   int getReservationCountByStore(@Param("store") Store store);
+
+  Optional<Store> findByPartner(Partner partner);
 }

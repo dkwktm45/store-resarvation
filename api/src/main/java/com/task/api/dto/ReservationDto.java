@@ -1,5 +1,6 @@
 package com.task.api.dto;
 
+import com.task.domain.type.ResType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +28,14 @@ public class ReservationDto {
     private String reservationCode;
     private String storeName;
     private String message;
+  }
+  @Getter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Builder
+  public static class ResponseEntity{
+    private Long reservationId;
+    private String email;
+    private ResType status;
   }
 }

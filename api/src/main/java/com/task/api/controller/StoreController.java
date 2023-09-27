@@ -1,5 +1,7 @@
 package com.task.api.controller;
 
+import com.task.api.application.StoreApplication;
+import com.task.api.dto.ReservationDto;
 import com.task.api.dto.StoreDto;
 import com.task.api.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +16,21 @@ import java.util.List;
 @RequestMapping("/reservation/store")
 public class StoreController {
   private final StoreService storeService;
+  private final StoreApplication storeApplication;
 
+  /**
+   * */
   @GetMapping("")
-  public ResponseEntity<List<StoreDto>> getListRequest(Pageable pageable) {
-    return ResponseEntity.ok(storeService.getList(pageable));
+  public ResponseEntity<List<StoreDto>> getStoreListRequest(Pageable pageable) {
+    return ResponseEntity.ok(storeService.getStoreList(pageable));
   }
 
+  @PostMapping("")
+  public ResponseEntity<List<ReservationDto.ResponseEntity>> getReservationListRequest(
+      @RequestHeader(name = "authorization") String token
+  ) {
+    return ResponseEntity.ok(storeApplication.getRservationList(token));
+  }
   @GetMapping("/detail")
   public ResponseEntity<StoreDto.Detail> detailRequest(
       @RequestParam String storeName

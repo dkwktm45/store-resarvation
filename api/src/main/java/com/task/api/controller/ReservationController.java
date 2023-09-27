@@ -2,7 +2,6 @@ package com.task.api.controller;
 
 import com.task.api.application.ReservationApplication;
 import com.task.api.dto.ReservationDto;
-import com.task.api.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReservationController {
 
-  private final ReservationService reservationService;
   private final ReservationApplication reservationApplication;
 
   /**
@@ -25,6 +23,13 @@ public class ReservationController {
       @RequestBody ReservationDto.Request req
   ) {
     return ResponseEntity.ok(reservationApplication.sendReservationMessage(req));
+  }
+  @PutMapping("/change")
+  public ResponseEntity<Void> refuseRequest(
+      @RequestParam Long id
+  ) {
+    reservationApplication.refuseReservation(id);
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/use")
