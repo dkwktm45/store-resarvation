@@ -6,6 +6,7 @@ import com.task.api.service.PartnerService;
 import com.task.common.exception.CustomException;
 import com.task.domain.entity.Partner;
 import com.task.domain.entity.Store;
+import com.task.redis.controller.PubSubController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import static com.task.common.exception.ErrorCode.STORE_REG_ONE;
 public class PartnerApplication {
   private final PartnerService partnerService;
   private final com.task.api.service.StoreService storeService;
+  private final PubSubController pubSubController;
   @Transactional
   public Store registStore(CreatePartner.Store req) {
     Partner partner = partnerService.getPartner(req.getEmail());
@@ -41,7 +43,6 @@ public class PartnerApplication {
         .storeLocation(storeDto.getStoreLocation())
         .totalSeats(storeDto.getTotalSeats())
         .build();
-
     storeService.saveStore(store);
     partner.getStores().add(store);
     return store;

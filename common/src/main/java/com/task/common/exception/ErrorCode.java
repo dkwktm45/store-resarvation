@@ -27,6 +27,12 @@ public enum ErrorCode {
   STORE_EXIST(BAD_REQUEST, "이미 존재하는 상호명입니다."),
   STORE_NOT_FOUND(BAD_REQUEST, "존재하지 않는 상호명입니다."),
 
+  // 예약
+  RESERVATION_NOT_FOUND(BAD_REQUEST, "존재하지 않는 예약입니다."),
+  RESERVATION_REFUSE(BAD_REQUEST, "거절된 예약입니다."),
+  RESERVATION_NOT_VALID(BAD_REQUEST, "예약코드가 일치하지 않습니다."),
+  RESERVATION_NOT_TIME(BAD_REQUEST, "예약시간이 지났습니다."),
+
   // 파트너
   PARTNER_NOT_EXIST(BAD_REQUEST, "유요한 파트너가 아닙니다."),
 

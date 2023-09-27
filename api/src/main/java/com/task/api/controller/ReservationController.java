@@ -2,18 +2,17 @@ package com.task.api.controller;
 
 import com.task.api.application.ReservationApplication;
 import com.task.api.dto.ReservationDto;
+import com.task.api.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/reservation")
 @RestController
 @RequiredArgsConstructor
 public class ReservationController {
 
+  private final ReservationService reservationService;
   private final ReservationApplication reservationApplication;
 
   /**
@@ -26,5 +25,13 @@ public class ReservationController {
       @RequestBody ReservationDto.Request req
   ) {
     return ResponseEntity.ok(reservationApplication.sendReservationMessage(req));
+  }
+
+  @GetMapping("/use")
+  public ResponseEntity<String> useRequest(
+      @RequestParam Long reservationId,
+      @RequestParam String code
+  ) {
+    return ResponseEntity.ok(reservationApplication.useRequest(reservationId, code));
   }
 }

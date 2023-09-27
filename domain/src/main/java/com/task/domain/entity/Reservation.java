@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -33,4 +34,24 @@ public class Reservation {
   private ResType status;
 
   private String reservationCode;
+
+  public static Reservation createEntityAll(User user, Store store,
+                                        ResType status) {
+    return Reservation.builder()
+        .user(user)
+        .store(store)
+        .status(status)
+        .store(store)
+        .user(user)
+        .reservationCode(getRandomCode())
+        .reservationTime(getLimitTime())
+        .build();
+  }
+  private static LocalDateTime getLimitTime() {
+    return LocalDateTime.now().plusHours(2);
+  }
+
+  private static String getRandomCode() {
+    return UUID.randomUUID().toString().substring(0, 5);
+  }
 }

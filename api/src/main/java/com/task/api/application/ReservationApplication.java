@@ -10,15 +10,14 @@ import com.task.domain.entity.User;
 import com.task.domain.type.ResType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+import static com.task.api.dto.message.ResponseType.*;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationApplication {
 
-  private final String MESSAGE = "예약이 원활하게 진행됐습니다.";
   private final ReservationService reservationService;
   private final UserService userService;
   private final StoreService storeService;
@@ -29,31 +28,43 @@ public class ReservationApplication {
    * */
 
   public ReservationDto.Response  sendReservationMessage(ReservationDto.Request req) {
-    if (req.getCurrentSeat() < req.getMaxSeat()) {
-      User user = userService.getUserId(req.getUserId());
-      Store store = storeService.getNameStore(req.getStoreName());
+    User user = userService.getUserId(req.getUserId());
+    Store store = storeService.getNameStore(req.getStoreName());
 
-      Reservation reservation =
-          Reservation.builder()
-              .user(user)
-              .store(store)
-              .status(ResType.WAITING)
-              .store(store)
-              .user(user)
-              .reservationCode(UUID.randomUUID().toString())
-              .reservationTime(LocalDateTime.now().plusHours(2))
-              .build();
-      Reservation response = reservationService.saveUseReservation(reservation);
+
+    if (req.getCurrentSeat() < req.getMaxSeat()) {
+      Reservation response = reservationService.saveUseReservation(
+          Reservation.createEntityAll(user, store, ResType.WAITING)
+      );
 
       return ReservationDto.Response.builder()
           .storeName(store.getStoreName())
           .reservationId(response.getReservationId())
           .reservationCode(response.getReservationCode())
-          .message(MESSAGE)
+          .message(SUCCESS_MESSAGE.getMessage())
+          .build();
+    }else{
+      Reservation response = reservationService.saveUseReservation(
+          Reservation.createEntityAll(user, store, ResType.REFUSE)
+      );
+
+      return ReservationDto.Response.builder()
+          .storeName(store.getStoreName())
+          .reservationId(response.getReservationId())
+          .reservationCode(response.getReservationCode())
+          .message(CONTINUE_MESSAGE.getMessage())
           .build();
     }
-    return null;
   }
-
-
+  @Transactional
+  public String useRequest(Long reservationId, String code) {
+    Reservation reservation = reservationService.validCode(reservationId,code);
+    Store reservationStore = reservation.getStore();
+    if (reservationStore.getAvailableSeats() >= reservationStore.getTotalSeats()) {
+      return ADMISSION_IS_IMPOSSIBLE.getMessage();
+    }else{
+      reservationStore.increaseUser();
+      return ADMISSION_IS_POSSIBLE.getMessage();
+    }
+  }
 }

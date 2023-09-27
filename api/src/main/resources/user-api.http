@@ -4,18 +4,77 @@ POST http://localhost:8080/join
 Content-Type: application/json
 
 {
-  "email": "wpekdl153@gmail.com",
+  "email": "dkwktm45@naver.com",
   "password": "1",
-  "userName" : "이진영",
+  "valid": false,
+  "userName" : "이진1",
   "userType": "USER"
 }
-### 회원가입
-POST http://localhost:8080/join
+### 로그인
+POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "email": "wpekdl@gmail.com",
-  "password": "1",
-  "userName" : "이진영",
-  "userType": "ADMIN"
+  "email": "dkwktm45@naver.com",
+  "password": "1"
 }
+
+### 로그아웃
+POST http://localhost:8080/logout
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTI2NDM5MSwiZXhwIjoxNjk1MjY0OTkxfQ.YQ0nlLD54rpBUJ77FsLhajWT1mOhZWcImL-1nqEU9Xc
+
+### store
+POST http://localhost:8080/store
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTM3NDg3NywiZXhwIjoxNjk1Mzc1NDc3fQ.YTfilAZUZugkL9Iewr4ITlTvFK6VdKHgo3jLJVEefDQ
+
+### 파트너 등록
+POST http://localhost:8080/reservation/partner/registration
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MjY5OSwiZXhwIjoxNjk1NzkzMjk5fQ.JR73JpBJJZNdldlVJ-h8wX-FU2Km-LCnwVIpbXIm2Og
+Content-Type: application/json
+
+{
+  "email": "dkwktm45@naver.com",
+  "partnerName": "게드릉"
+}
+
+### 파트너 매장 등록
+POST http://localhost:8080/reservation/partner/storeRegist
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MjY5OSwiZXhwIjoxNjk1NzkzMjk5fQ.JR73JpBJJZNdldlVJ-h8wX-FU2Km-LCnwVIpbXIm2Og
+Content-Type: application/json
+
+{
+  "email": "dkwktm45@naver.com",
+  "storeDtoList": [
+    {
+      "storeName": "떡을 볶아볶아56221",
+      "storeLocation": "광주 남구3",
+      "storeDescription": "떡볶이 맛집",
+      "availableSeats": 0,
+      "totalSeats": 10
+    }
+  ]
+}
+
+### 매장 목록
+GET http://localhost:8080/reservation/store?page=0&size=1
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTM3NDg3NywiZXhwIjoxNjk1Mzc1NDc3fQ.YTfilAZUZugkL9Iewr4ITlTvFK6VdKHgo3jLJVEefDQ
+
+### 매장 디테일
+GET http://localhost:8080/reservation/store/detail?storeName=떡을 볶아볶아56221
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MjY5OSwiZXhwIjoxNjk1NzkzMjk5fQ.JR73JpBJJZNdldlVJ-h8wX-FU2Km-LCnwVIpbXIm2Og
+
+### 예약
+POST http://localhost:8080/reservation/available
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MzMzNywiZXhwIjoxNjk1NzkzOTM3fQ.8YBi5DFuIiJuZ-mYrLxC-FiWLnSMFuuEVCjlKQy7LaY
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "storeName": "떡을 볶아볶아56221",
+  "maxSeat": 10,
+  "currentSeat": 11
+}
+
+### 키오스크 도착
+GET http://localhost:8080/reservation/use?reservationId=1&code=b6be30ac-aac4-411f-93ca-c5982764148c
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MzMzNywiZXhwIjoxNjk1NzkzOTM3fQ.8YBi5DFuIiJuZ-mYrLxC-FiWLnSMFuuEVCjlKQy7LaY

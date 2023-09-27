@@ -37,4 +37,10 @@ public class Store {
   @JsonBackReference
   @JoinColumn(name = "partnerId")
   private Partner partner;
+
+
+  public void increaseUser() {
+    this.availableSeats++;
+  }
+
 }
