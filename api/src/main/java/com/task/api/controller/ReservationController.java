@@ -25,10 +25,10 @@ public class ReservationController {
     return ResponseEntity.ok(reservationApplication.sendReservationMessage(req));
   }
   @PutMapping("/change")
-  public ResponseEntity<Void> refuseRequest(
+  public ResponseEntity<Void> changeRequest(
       @RequestParam Long id
   ) {
-    reservationApplication.refuseReservation(id);
+    reservationApplication.changeReservation(id);
     return ResponseEntity.ok().build();
   }
 

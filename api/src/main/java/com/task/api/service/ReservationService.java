@@ -40,7 +40,7 @@ public class ReservationService {
   }
 
   @Transactional
-  public void refuse(Long id) {
+  public void changeStatus(Long id) {
     Reservation reservation = reservationRepository.findById(id)
         .orElseThrow(() -> new CustomException(RESERVATION_NOT_FOUND));
     if (reservation.getStatus().equals(REFUSE)) {

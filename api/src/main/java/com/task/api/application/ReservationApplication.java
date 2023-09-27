@@ -69,7 +69,7 @@ public class ReservationApplication {
     }
   }
 
-  public void refuseReservation(Long id) {
-    reservationService.refuse(id);
+  public void changeReservation(Long id) {
+    reservationService.changeStatus(id);
   }
 }
