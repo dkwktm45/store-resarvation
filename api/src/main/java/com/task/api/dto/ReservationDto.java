@@ -38,4 +38,13 @@ public class ReservationDto {
     private String email;
     private ResType status;
   }
+  @Getter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Builder
+  public static class ResponseReview{
+    private Long reservationId;
+    private String storeName;
+  }
+
 }

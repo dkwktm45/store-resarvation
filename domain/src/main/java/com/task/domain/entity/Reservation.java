@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,6 +38,10 @@ public class Reservation {
 
   private String reservationCode;
 
+  @ColumnDefault("0")
+  private boolean reservationCheck;
+
+
   public static Reservation createEntityAll(User user, Store store,
                                         ResType status) {
     return Reservation.builder()
@@ -59,5 +64,6 @@ public class Reservation {
 
   public void changeSuccess() {
     this.status = WAITING;
+    this.reservationCheck = true;
   }
 }

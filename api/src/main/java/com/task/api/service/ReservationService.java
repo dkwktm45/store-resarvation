@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.task.common.exception.ErrorCode.*;
 import static com.task.domain.type.ResType.REFUSE;
 import static java.time.LocalDateTime.now;
@@ -18,6 +20,9 @@ public class ReservationService {
 
   public Reservation saveUseReservation(Reservation reservation) {
     return reservationRepository.save(reservation);
+  }
+  public List<Reservation> getReviewByToken(String email) {
+    return reservationRepository.getReservationByEmail(email);
   }
 
   @Transactional
@@ -43,8 +48,12 @@ public class ReservationService {
   public void changeStatus(Long id) {
     Reservation reservation = reservationRepository.findById(id)
         .orElseThrow(() -> new CustomException(RESERVATION_NOT_FOUND));
-    if (reservation.getStatus().equals(REFUSE)) {
-      reservation.changeSuccess();
+    if (!reservation.getStatus().equals(REFUSE)) {
+      throw new CustomException(RESERVATION_USE_STATUS);
+    }else if (reservation.isReservationCheck()){
+      throw new CustomException(RESERVATION_USE_STATUS);
     }
+
+    reservation.changeSuccess();
   }
 }
