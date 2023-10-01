@@ -12,4 +12,5 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
       "    select u from User u where u.email = :email ) and\n" +
       "        r.reservationCheck = true")
   List<Reservation> getReservationByEmail(String email);
+
 }

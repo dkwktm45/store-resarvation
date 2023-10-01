@@ -1,13 +1,11 @@
 package com.task.api.controller;
 
 import com.task.api.application.ReviewApplication;
+import com.task.api.dto.RequestWrite;
 import com.task.api.dto.ReservationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,13 @@ public class ReviewController {
       @RequestHeader("authorization") String token
   ){
     return ResponseEntity.ok(reviewApplication.getReviews(token));
+  }
+
+  @PostMapping("/wirte")
+  public ResponseEntity<String> writeRequest(
+      @RequestHeader("authorization") String token,
+      @RequestBody RequestWrite requestWrite
+      ){
+    return ResponseEntity.ok(reviewApplication.write(token, requestWrite));
   }
 }

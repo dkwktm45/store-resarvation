@@ -32,6 +32,7 @@ public enum ErrorCode {
   RESERVATION_REFUSE(BAD_REQUEST, "거절된 예약입니다."),
   RESERVATION_NOT_VALID(BAD_REQUEST, "예약코드가 일치하지 않습니다."),
   RESERVATION_NOT_TIME(BAD_REQUEST, "예약시간이 지났습니다."),
+  RESERVATION_NOT_USE(BAD_REQUEST, "해당 매장을 이용하지 않은 고객입니다."),
   RESERVATION_USE_STATUS(BAD_REQUEST, "이미 예약이 확정 됐습니다."),
 
   // 파트너

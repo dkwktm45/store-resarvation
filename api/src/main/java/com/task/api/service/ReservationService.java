@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.task.common.exception.ErrorCode.*;
 import static com.task.domain.type.ResType.REFUSE;
@@ -55,5 +56,25 @@ public class ReservationService {
     }
 
     reservation.changeSuccess();
+  }
+
+  public Reservation validStatus(Long reservationId) {
+    Optional<Reservation> optionalReview =
+        reservationRepository.findById(reservationId);
+
+    if (!optionalReview.isPresent()) {
+      throw new CustomException(RESERVATION_NOT_FOUND);
+    }
+    Reservation reservation = optionalReview.get();
+
+    if (!reservation.isReservationCheck()) {
+      throw new CustomException(RESERVATION_NOT_USE);
+    }
+    return reservation;
+  }
+
+  @Transactional
+  public void deleteReservationByEntity(Reservation reservation) {
+    reservationRepository.delete(reservation);
   }
 }
