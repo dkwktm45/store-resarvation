@@ -20,9 +20,11 @@ public class ReservationController {
    * */
   @PostMapping("/available")
   public ResponseEntity<ReservationDto.Response> availableRequest(
-      @RequestBody ReservationDto.Request req
+      @RequestBody ReservationDto.Request req,
+      @RequestHeader("authorization") String header
   ) {
-    return ResponseEntity.ok(reservationApplication.sendReservationMessage(req));
+    return ResponseEntity.ok(reservationApplication.sendReservationMessage(header,
+        req));
   }
   @PutMapping("/change")
   public ResponseEntity<Void> changeRequest(

@@ -2,15 +2,13 @@ package com.task.api.service;
 
 import com.task.api.dto.CreateUser;
 import com.task.common.exception.CustomException;
-import com.task.common.exception.ErrorCode;
 import com.task.domain.entity.User;
-import com.task.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
+import java.util.Objects;
 
 import static com.task.common.exception.ErrorCode.*;
 
@@ -19,23 +17,21 @@ import static com.task.common.exception.ErrorCode.*;
 @RequiredArgsConstructor
 public class SignUpService {
 
-  private final UserRepository userRepository;
+  private final UserService userService;
 
   @Transactional
   public User createUser(CreateUser.Request request) {
-    return userRepository.save(
-        User.builder()
-            .userName(request.getUserName())
-            .userType(request.getUserType())
-            .valid(request.getValid())
-            .email(request.getEmail())
-            .password(request.getPassword()).build()
+    return userService.saveUser(User.builder()
+        .userName(request.getUserName())
+        .userType(request.getUserType())
+        .valid(request.getValid())
+        .email(request.getEmail())
+        .password(request.getPassword()).build()
     );
   }
 
   public boolean isEmailExist(String email) {
-    return userRepository.findByEmail(email.toLowerCase(Locale.ROOT))
-        .isPresent();
+    return !Objects.isNull(userService.findByEmail(email));
   }
   @Transactional
   public void changeUserValidateEmail(
@@ -46,8 +42,7 @@ public class SignUpService {
 
   @Transactional
   public void validUser(String email,String code) {
-    User user = userRepository.findByEmail(email)
-        .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+    User user = userService.findByEmail(email);
 
     if (user.getValid()) {
       throw new CustomException(ALREADY_VERIFY);

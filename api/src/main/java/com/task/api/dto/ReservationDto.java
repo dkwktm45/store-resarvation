@@ -13,10 +13,8 @@ public class ReservationDto {
   @AllArgsConstructor
   @Builder
   public static class Request{
-    private Long userId;
+    private String partnerEmail;
     private String storeName;
-    private Integer maxSeat;
-    private Integer currentSeat;
   }
 
   @Getter
