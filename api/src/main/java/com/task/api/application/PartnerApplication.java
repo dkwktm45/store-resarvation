@@ -21,7 +21,6 @@ import static com.task.common.exception.ErrorCode.STORE_REG_ONE;
 public class PartnerApplication {
   private final PartnerService partnerService;
   private final com.task.api.service.StoreService storeService;
-  private final PubSubController pubSubController;
   @Transactional
   public Store registStore(CreatePartner.Store req) {
     Partner partner = partnerService.getPartner(req.getEmail());

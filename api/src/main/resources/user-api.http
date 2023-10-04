@@ -4,10 +4,10 @@ POST http://localhost:8080/join
 Content-Type: application/json
 
 {
-  "email": "dkwktm45@naver.com",
+  "email": "444@naver.com",
   "password": "1",
   "valid": false,
-  "userName" : "이진1",
+  "userName" : "c",
   "userType": "USER"
 }
 ### 로그인
@@ -15,7 +15,7 @@ POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "email": "dkwktm45@naver.com",
+  "email": "444@naver.com",
   "password": "1"
 }
 
@@ -29,7 +29,7 @@ authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4
 
 ### 파트너 등록
 POST http://localhost:8080/reservation/partner/registration
-authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MjY5OSwiZXhwIjoxNjk1NzkzMjk5fQ.JR73JpBJJZNdldlVJ-h8wX-FU2Km-LCnwVIpbXIm2Og
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6InYzak9vZ1B5RE80em9jaGdrWklLVkE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NjQxODg0MSwiZXhwIjoxNjk2NDE5NDQxfQ.EC5rsYiBNwUfhL9oNWkIMUFqHR_gdUBRmhf-S1Ehmik
 Content-Type: application/json
 
 {
@@ -39,7 +39,7 @@ Content-Type: application/json
 
 ### 파트너 매장 등록
 POST http://localhost:8080/reservation/partner/storeRegist
-authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MjY5OSwiZXhwIjoxNjk1NzkzMjk5fQ.JR73JpBJJZNdldlVJ-h8wX-FU2Km-LCnwVIpbXIm2Og
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6InYzak9vZ1B5RE80em9jaGdrWklLVkE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NjQxODg0MSwiZXhwIjoxNjk2NDE5NDQxfQ.EC5rsYiBNwUfhL9oNWkIMUFqHR_gdUBRmhf-S1Ehmik
 Content-Type: application/json
 
 {
@@ -57,24 +57,26 @@ Content-Type: application/json
 
 ### 매장 목록
 GET http://localhost:8080/reservation/store?page=0&size=1
-authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTM3NDg3NywiZXhwIjoxNjk1Mzc1NDc3fQ.YTfilAZUZugkL9Iewr4ITlTvFK6VdKHgo3jLJVEefDQ
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoeHVmYmQ0Ui96QXN3a1BWS045bXF3PT0iLCJqdGkiOiI5VjdyUWtoWW1OQUUzTU5BZDhrQ1hRPT0iLCJyb2xlcyI6IlVTRVIiLCJpYXQiOjE2OTY0MTg5MjMsImV4cCI6MTY5NjQxOTUyM30.HMcb6gQ1Ib-Kgq92mdlYuESBhNnDZqGt4MDNi0pUbxI
 
 ### 매장 디테일
 GET http://localhost:8080/reservation/store/detail?storeName=떡을 볶아볶아56221
-authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MjY5OSwiZXhwIjoxNjk1NzkzMjk5fQ.JR73JpBJJZNdldlVJ-h8wX-FU2Km-LCnwVIpbXIm2Og
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6InYzak9vZ1B5RE80em9jaGdrWklLVkE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NjQxODg0MSwiZXhwIjoxNjk2NDE5NDQxfQ.EC5rsYiBNwUfhL9oNWkIMUFqHR_gdUBRmhf-S1Ehmik
 
 ### 예약
 POST http://localhost:8080/reservation/available
-authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MzMzNywiZXhwIjoxNjk1NzkzOTM3fQ.8YBi5DFuIiJuZ-mYrLxC-FiWLnSMFuuEVCjlKQy7LaY
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoeHVmYmQ0Ui96QXN3a1BWS045bXF3PT0iLCJqdGkiOiI5VjdyUWtoWW1OQUUzTU5BZDhrQ1hRPT0iLCJyb2xlcyI6IlVTRVIiLCJpYXQiOjE2OTY0Mjc3MjEsImV4cCI6MTY5NjQyODMyMX0.jvmFq8thmrHF8U-x12dRAo8AGh4r3P_Mr5niQc1z6MU
 Content-Type: application/json
 
 {
-  "userId": 1,
-  "storeName": "떡을 볶아볶아56221",
-  "maxSeat": 10,
-  "currentSeat": 11
+  "storeEmail": "dkwktm45@naver.com",
+  "storeName": "떡을 볶아볶아56221"
 }
 
 ### 키오스크 도착
 GET http://localhost:8080/reservation/use?reservationId=1&code=b6be30ac-aac4-411f-93ca-c5982764148c
 authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNRjlPdEN2VjU0b1hLMVk2MmZyRU5veEE4dzQzQ240dFgzVndnSStEOXlvPSIsImp0aSI6IjFKNjBWVjlXUmtyTEtKcXk2N3BVSVE9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY5NTc5MzMzNywiZXhwIjoxNjk1NzkzOTM3fQ.8YBi5DFuIiJuZ-mYrLxC-FiWLnSMFuuEVCjlKQy7LaY
+
+### 알림 유저등록
+POST http://localhost:8080/reservation/notification
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoeHVmYmQ0Ui96QXN3a1BWS045bXF3PT0iLCJqdGkiOiI5VjdyUWtoWW1OQUUzTU5BZDhrQ1hRPT0iLCJyb2xlcyI6IlVTRVIiLCJpYXQiOjE2OTY0Mjc3MjEsImV4cCI6MTY5NjQyODMyMX0.jvmFq8thmrHF8U-x12dRAo8AGh4r3P_Mr5niQc1z6MU

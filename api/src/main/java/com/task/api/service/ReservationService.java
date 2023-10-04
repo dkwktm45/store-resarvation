@@ -27,10 +27,12 @@ public class ReservationService {
   }
 
   @Transactional
-  public Reservation validCode(Long reservationId, String code) {
-     Reservation reservation = reservationRepository.findById(reservationId)
+  public Reservation getById(Long reservationId) {
+    return reservationRepository.findById(reservationId)
         .orElseThrow(() -> new CustomException(RESERVATION_NOT_FOUND));
+  }
 
+  public void validReservation(String code, Reservation reservation) {
     if (!reservation.getStatus().equals(REFUSE)) {
       throw new CustomException(RESERVATION_NOT_FOUND);
     }
@@ -42,7 +44,6 @@ public class ReservationService {
     if (reservation.getReservationTime().isBefore(now())) {
       throw new CustomException(RESERVATION_NOT_TIME);
     }
-    return reservation;
   }
 
   @Transactional

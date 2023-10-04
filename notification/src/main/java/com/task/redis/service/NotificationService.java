@@ -22,6 +22,7 @@ public class NotificationService {
     sseEmitter.onCompletion(() -> {
       connectUser.remove(email);
     });
+
     sseEmitter.onTimeout(() -> {
       sseEmitter.complete();
       connectUser.remove(email);
@@ -29,9 +30,13 @@ public class NotificationService {
     connectUser.put(email, sseEmitter);
     return sseEmitter;
   }
-  public void sendMessage(String email, String message) throws IOException {
+  public void toUserMessage(String email, String message) {
     if (connectUser.containsKey(email)){
-      connectUser.get(email).send(message, MediaType.TEXT_PLAIN);
+      try {
+        connectUser.get(email).send(message, MediaType.TEXT_PLAIN);
+      }catch (Exception e){
+        e.printStackTrace();
+      }
     }
   }
 }
