@@ -62,8 +62,11 @@ public class Reservation {
     return UUID.randomUUID().toString().substring(0, 5);
   }
 
-  public void changeSuccess() {
+  public void changeWaitingSuccess() {
     this.status = WAITING;
+  }
+
+  public void changeKiosk() {
     this.reservationCheck = true;
   }
 }

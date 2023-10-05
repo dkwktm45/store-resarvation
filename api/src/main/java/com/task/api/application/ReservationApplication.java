@@ -31,13 +31,15 @@ public class ReservationApplication {
   private final StoreService storeService;
   private final SenderPartner senderPartner;
   /**
-   * 만약 예약을 진행할 수 있다면 -> 잔여 좌석수가 남아 있다면
-   * WATING아라는 Type으로 저장
+   * 남은 좌석수를 판단하고 예약을 진행하는 메소드
+   * - getReservationAndSend : 예약 진행현황을 반환하고, 점주에게 알림이 울리도록 하는 메소드
+   *
+   * feat : store의 총자리(totalSeats) , 이용가능(availableSeats) 좌석 를 판단하고 그에 맞는
+   * 메소드를 수행하도록 규정
    */
-
   public ReservationDto.Response sendReservationMessage(String header, ReservationDto.Request req) {
     User user = userService.findByEmail(provider.getUserVo(header).getEmail());
-    Store store = storeService.getNameStore(req.getStoreName());
+    Store store = storeService.getStoreByStoreName(req.getStoreName());
     Reservation response;
 
     if (store.getTotalSeats() <= store.getAvailableSeats()) {
@@ -49,6 +51,11 @@ public class ReservationApplication {
     return responseByType(response);
   }
 
+  /**
+   * 예약을 각각의 매개변수를 통해 저장하고, 점주에게 알림이 가는 메소드
+   * - saveUseReservation : user, store, ResType.REFUSE 를 통한 Reservation 객체 저장
+   * - sendMessage : getPartnerEmail에게 알림이 가는 역할
+   * */
   private Reservation getReservationAndSend(User user, Store store, MessageForm.Message partnerRefuse) {
     Reservation response = reservationService.saveUseReservation(
         Reservation.createEntityAll(user, store, ResType.REFUSE)
@@ -60,10 +67,19 @@ public class ReservationApplication {
     return response;
   }
 
+  /**
+   * 지금 바로 입장 가능한지에 대한 정보를 반환하는 메소드
+   * - validReservation : 타탕한 예약 코드인지를 묻는 메소드
+   *
+   * feat : 입장 가능한지는 좌석을 보고 결정하도록 규정
+   * */
   @Transactional
   public String useRequest(Long reservationId, String code) {
     Reservation reservation = reservationService.getById(reservationId);
     reservationService.validReservation(code, reservation);
+
+    // 키오스크 도착정보 변경
+    reservation.changeKiosk();
 
     Store reservationStore = reservation.getStore();
     if (reservationStore.getAvailableSeats() >= reservationStore.getTotalSeats()) {
@@ -74,10 +90,8 @@ public class ReservationApplication {
     }
   }
 
-  public void changeReservation(Long id) {
-    reservationService.changeStatus(id);
-  }
-
+  /**
+   * ResType 유형에 따른 Entity를 DTO로 변환하는 메소드*/
   private ReservationDto.Response responseByType(Reservation reservation) {
 
     if (Objects.equals(reservation.getStatus(), ResType.WAITING)) {

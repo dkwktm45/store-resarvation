@@ -17,10 +17,13 @@ public class PartnerService {
   private final PartnerRepository partnerRepository;
   private final UserRepository userRepository;
 
+  /**
+   * 파트너 등록 : 이메일에 관한 검증을 통해서 없을시 회원가입이 이루어진다.
+   * */
   @Transactional
   public String createPartner(CreatePartner.Request partnerRequest) {
-    if (!userRepository.existsByEmail(partnerRequest.getEmail())) {
-      throw new CustomException(NOT_FOUND_USER);
+    if (!partnerRepository.existsByPartnerEmail(partnerRequest.getEmail())) {
+      throw new CustomException(PARTNER_EXIST);
     }
 
     partnerRepository.save(
@@ -31,6 +34,11 @@ public class PartnerService {
     );
     return "파트너 가입이 되었습니다.";
   }
+
+  /**
+   * 파트너 Object를 반환하는 메소드
+   * - 매개변수는 Email를 통해서 구현이 된다.
+   * */
   @Transactional(readOnly = true)
   public Partner getPartner(String email) {
     return partnerRepository.findByPartnerEmail(email)

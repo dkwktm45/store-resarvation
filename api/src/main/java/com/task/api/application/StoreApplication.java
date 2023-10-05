@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.task.api.dto.ReservationDto.ResponseEntity;
+import static java.util.Collections.EMPTY_LIST;
 
 @Service
 @RequiredArgsConstructor
@@ -25,23 +26,28 @@ public class StoreApplication {
   private final JwtAuthenticationProvider provider;
 
 
+  /**
+   * 리뷰 수락이 필요로 하는 리뷰 목록을 가져오는 메소드
+   * - getPartner : 토큰을 통한 파트너 정보를 가져옴
+   * - getReservationList : 파트너에 해당하는 예약 목록을 가져옴
+   * */
   public List<ReservationDto.ResponseEntity> getRservationList(String token) {
     TokenUser tokenUser = provider.getUserVo(token);
     Partner partner = partnerService.getPartner(tokenUser.getEmail());
 
     List<Reservation> reservations = storeService.getReservationList(partner)
         .getReservations()
+        // stream 메서드를 통해서 REFUSE인 항목들만을 반환
         .stream()
         .filter(re -> re.getStatus().equals(ResType.REFUSE))
         .collect(Collectors.toList());
 
     if (!reservations.isEmpty()) {
-      List<ReservationDto.ResponseEntity> collect = reservations.stream()
+      return reservations.stream()
           .map((Reservation reservation) -> new ResponseEntity(reservation.getReservationId(), reservation.getUser().getEmail(), reservation.getStatus()))
           .collect(Collectors.toList());
-      return collect;
     } else {
-      return null;
+      return EMPTY_LIST;
     }
   }
 }

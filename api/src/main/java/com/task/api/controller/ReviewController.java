@@ -15,7 +15,7 @@ import java.util.List;
 public class ReviewController {
   private final ReviewApplication reviewApplication;
   /**
-   * 리뷰 목록
+   * 리뷰 목록 요청
    * */
   @GetMapping("")
   public ResponseEntity<List<ReservationDto.ResponseReview>> getReviewsRequest(
@@ -24,6 +24,9 @@ public class ReviewController {
     return ResponseEntity.ok(reviewApplication.getReviews(token));
   }
 
+  /**
+   * 리뷰 작성 요청
+   * */
   @PostMapping("/wirte")
   public ResponseEntity<String> writeRequest(
       @RequestHeader("authorization") String token,

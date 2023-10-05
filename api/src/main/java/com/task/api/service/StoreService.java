@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +23,23 @@ public class StoreService {
 
   private final StoreRepository storeRepository;
 
+  /**
+   * 매장이 존재하는지 여부를 묻는 메소드
+   * */
   public boolean nameExist(String storeName) {
     return storeRepository.existsByStoreName(storeName);
   }
-  public Store getNameStore(String storeName) {
+
+  /**
+   * storeName 해당하는 매장을 반환하는 메소드
+   * */
+  public Store getStoreByStoreName(String storeName) {
     return storeRepository.findByStoreName(storeName)
         .orElseThrow(() -> new CustomException(ErrorCode.STORE_NOT_FOUND));
   }
+
+  /**
+   * Pageable 매개변수를 통한 매장 목록을 반환*/
   public List<StoreDto> getStoreList(Pageable pageable) {
     List<Store> stores = storeRepository.findAll(pageable).getContent();
     if (!stores.isEmpty()) {
@@ -42,13 +53,23 @@ public class StoreService {
                   .build())
           .collect(Collectors.toList());
     }
-    return null;
+    return Collections.EMPTY_LIST;
   }
+  /**
+   * Partner 매개변수에 해당하는 매장을 반환하는 메소드
+   * */
   public Store getReservationList(Partner partner) {
-    Store stores = storeRepository.findByPartner(partner)
+    return storeRepository.findByPartner(partner)
         .orElseThrow(() -> new CustomException(STORE_NOT_FOUND));
-    return stores;
   }
+  /**
+   * 매장의 세부사항 메소드
+   * - getReviewCountByStore : store에 대한 review 사이즈를 반환 (커스텀 메소드 사용)
+   * - getReservationCountByStore : 예약확정이 된 상태의 값들을 가져온다.
+   *
+   * feat
+   * - 예약확정 : reservationCheck가 true인 경우 , 키오스크에서 도착한 경우
+   * */
   public StoreDto.Detail getDetail(String storeName) {
     Store store = storeRepository.findByStoreName(storeName)
         .orElseThrow(() -> new CustomException(STORE_NOT_FOUND));
@@ -67,6 +88,9 @@ public class StoreService {
         .build();
   }
 
+  /**
+   * 매장 저장 메소드
+   * */
   @Transactional
   public void saveStore(Store store) {
     storeRepository.save(store);

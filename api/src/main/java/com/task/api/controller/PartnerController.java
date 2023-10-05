@@ -14,6 +14,10 @@ public class PartnerController {
 
   private final PartnerApplication partnerApplication;
   private final PartnerService partnerService;
+
+  /**
+   * 파트너 등록
+   * */
   @PostMapping("/registration")
   public ResponseEntity<String> regPartner(
       @RequestBody CreatePartner.Request partnerRequest
@@ -22,6 +26,9 @@ public class PartnerController {
   }
 
 
+  /**
+   * 스토어 등록
+   * */
   @PostMapping("/storeRegist")
   public ResponseEntity<?> registStore(
       @RequestBody CreatePartner.Store req

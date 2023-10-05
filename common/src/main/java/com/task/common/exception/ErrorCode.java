@@ -37,6 +37,7 @@ public enum ErrorCode {
 
   // 파트너
   PARTNER_NOT_EXIST(BAD_REQUEST, "유요한 파트너가 아닙니다."),
+  PARTNER_EXIST(BAD_REQUEST, "이미 존재하는 파트너입니다."),
 
   // 잘못된 인자,
   REQUEST_BAD(BAD_REQUEST,"잘못된 인자가 들어왔습니다.");
