@@ -1,7 +1,7 @@
-package com.task.redis.rabbitmq.senderType;
+package com.task.noti.rabbitmq.senderType;
 
-import com.task.redis.dto.MessageForm;
-import com.task.redis.rabbitmq.Sender;
+import com.task.noti.dto.MessageForm;
+import com.task.noti.rabbitmq.Sender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

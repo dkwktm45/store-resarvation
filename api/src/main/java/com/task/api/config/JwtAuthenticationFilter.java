@@ -1,9 +1,9 @@
 package com.task.api.config;
 
-import com.task.redis.jwt.client.RedisClient;
-import com.task.redis.jwt.dto.RefreshToken;
+import com.task.noti.jwt.client.RedisClient;
+import com.task.noti.jwt.dto.RefreshToken;
 import com.task.common.exception.CustomException;
-import com.task.redis.jwt.JwtAuthenticationProvider;
+import com.task.noti.jwt.JwtAuthenticationProvider;
 import com.task.domain.entity.User;
 import com.task.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

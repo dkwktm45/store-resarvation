@@ -1,6 +1,6 @@
-package com.task.redis.rabbitmq;
+package com.task.noti.rabbitmq;
 
-import com.task.redis.dto.MessageForm;
+import com.task.noti.dto.MessageForm;
 
 public interface Sender {
 

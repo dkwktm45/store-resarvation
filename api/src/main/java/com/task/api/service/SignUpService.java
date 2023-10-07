@@ -19,6 +19,9 @@ public class SignUpService {
 
   private final UserService userService;
 
+  /**
+   * 유저 생성
+   * */
   @Transactional
   public User createUser(CreateUser.Request request) {
     return userService.saveUser(User.builder()
@@ -30,9 +33,15 @@ public class SignUpService {
     );
   }
 
+  /**
+   * 이메일이 존재하는지 여부 메소드
+   * */
   public boolean isEmailExist(String email) {
     return !Objects.isNull(userService.findByEmail(email));
   }
+  /**
+   * 유저의 검증을 위한 데이터 추가 메소드
+   * */
   @Transactional
   public void changeUserValidateEmail(
       User user,
@@ -40,6 +49,9 @@ public class SignUpService {
     user.createValid(verificationCode, LocalDateTime.now());
   }
 
+  /**
+   * 유저 검증 및 변환 메소드
+   * */
   @Transactional
   public void validUser(String email,String code) {
     User user = userService.findByEmail(email);

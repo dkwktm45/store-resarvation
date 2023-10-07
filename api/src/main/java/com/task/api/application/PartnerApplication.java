@@ -6,30 +6,28 @@ import com.task.api.service.PartnerService;
 import com.task.common.exception.CustomException;
 import com.task.domain.entity.Partner;
 import com.task.domain.entity.Store;
-import com.task.redis.controller.PubSubController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 import static com.task.common.exception.ErrorCode.STORE_EXIST;
-import static com.task.common.exception.ErrorCode.STORE_REG_ONE;
 
 @Service
 @RequiredArgsConstructor
 public class PartnerApplication {
   private final PartnerService partnerService;
   private final com.task.api.service.StoreService storeService;
+
+  /**
+   * 스토어 등록 메소드
+   * - nameExist : 이미 등록된 매장인지를 검증
+   * */
   @Transactional
   public Store registStore(CreatePartner.Store req) {
     Partner partner = partnerService.getPartner(req.getEmail());
 
-    List<StoreDto> storeDtos = req.getStoreDtoList();
-    if (storeDtos.size() > 2) {
-      throw new CustomException(STORE_REG_ONE);
-    }
-    StoreDto storeDto = storeDtos.get(0);
+    StoreDto storeDto = req.getStoreDto();
 
     if (storeService.nameExist(storeDto.getStoreName())) {
       throw new CustomException(STORE_EXIST);

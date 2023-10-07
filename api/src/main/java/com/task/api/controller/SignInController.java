@@ -17,13 +17,19 @@ public class SignInController {
 
   private final SignInApplication signInApplication;
 
+  /**
+   * 로그인 요청
+   * */
   @PostMapping("/login")
   public ResponseEntity<HashMap<String, String>> loginRequest(
       @RequestBody RequestUser.Login req
   ){
-    return ResponseEntity.ok(signInApplication.userLoginToken(req));
+    return ResponseEntity.ok(signInApplication.getTokenByReq(req));
   }
 
+  /**
+   * 로그아웃 요청
+   * */
   @PostMapping("/logout")
   public ResponseEntity<Void> logoutRequest(
       @RequestHeader("authorization") String accessToken

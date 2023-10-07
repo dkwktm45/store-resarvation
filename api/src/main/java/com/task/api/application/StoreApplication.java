@@ -6,8 +6,8 @@ import com.task.api.service.StoreService;
 import com.task.domain.entity.Partner;
 import com.task.domain.entity.Reservation;
 import com.task.domain.type.ResType;
-import com.task.redis.jwt.JwtAuthenticationProvider;
-import com.task.redis.jwt.dto.TokenUser;
+import com.task.noti.jwt.JwtAuthenticationProvider;
+import com.task.noti.jwt.dto.TokenUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

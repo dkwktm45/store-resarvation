@@ -1,4 +1,4 @@
-package com.task.redis.config;
+package com.task.noti.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,16 +1,12 @@
-package com.task.redis.rabbitmq;
+package com.task.noti.rabbitmq;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.task.redis.dto.MessageForm;
-import com.task.redis.service.NotificationService;
+import com.task.noti.dto.MessageForm;
+import com.task.noti.service.NotificationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.amqp.core.ExchangeTypes.DIRECT;
@@ -19,7 +15,10 @@ import static org.springframework.amqp.core.ExchangeTypes.DIRECT;
 @Service
 public class Receiver {
   private final NotificationService notificationService;
-  private final ObjectMapper objectMapper;
+
+  /**
+   * 유저에게 알림이 가는 메소드
+   * */
   @RabbitListener(
       bindings =
       @QueueBinding(
@@ -30,7 +29,9 @@ public class Receiver {
   public void userReceive(MessageForm form){
     notificationService.toUserMessage(form.getEmail(), String.valueOf(form.getMessage()));
   }
-
+  /**
+   * 파트너에게 알림이 가는 메소드
+   * */
   @RabbitListener(
       bindings =
       @QueueBinding(

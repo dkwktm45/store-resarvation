@@ -1,5 +1,6 @@
 package com.task.api.application;
 
+import com.task.api.application.utill.SignUpAppUtil;
 import com.task.api.dto.CreateUser;
 import com.task.api.mailgun.MailgunClient;
 import com.task.api.mailgun.SendMailgun;
@@ -10,9 +11,8 @@ import com.task.domain.type.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 import static com.task.api.dto.message.ResponseType.JOIN_USER;
+import static com.task.api.dto.message.ResponseType.VALID_SUCCESS;
 import static com.task.common.exception.ErrorCode.NOT_FOUND_ACCOUNT;
 import static com.task.common.exception.ErrorCode.NOT_VALID_JOIN;
 
@@ -20,20 +20,29 @@ import static com.task.common.exception.ErrorCode.NOT_VALID_JOIN;
 @RequiredArgsConstructor
 public class SignUpApplication {
 
+  private final SignUpAppUtil signUpAppUtil;
   private final MailgunClient mailgunClient;
   private final SignUpService signUpService;
+
+  /**
+   * CreateUser.Request매개변수를 통한 회원 가입 로직 메소드
+   * - isEmailExist : 해당 이메일이 있는지를 검증
+   * - signUpUtil : 각종 편의를 위한 utils
+   * - sendMail : 메일을 통한 검증을 위한 메일을 1차적으로 보냄
+   * - changeUserValidateEmail : 유저의 정보를 변경 -> 검증할 수 있도록
+   * */
   public String signUpUser(CreateUser.Request user){
     if (signUpService.isEmailExist(user.getEmail())) {
       throw new CustomException(NOT_FOUND_ACCOUNT);
     }
     User responseUser = signUpService.createUser(user);
     if (responseUser.getUserType().equals(UserType.USER)) {
-      String code = getRandomCode();
+      String code = signUpAppUtil.getRandomCode();
       mailgunClient.sendMail(SendMailgun.builder()
           .from("reservatation@gmail.com")
           .to(user.getEmail())
           .subject("Verification Email")
-          .text(getVerificationEmailBody(user.getEmail(),
+          .text(signUpAppUtil.getVerificationEmailBody(user.getEmail(),
               user.getUserName(), code))
           .build());
       signUpService.changeUserValidateEmail(responseUser, code);
@@ -43,22 +52,12 @@ public class SignUpApplication {
     }
   }
 
-  private String getRandomCode() {
-    return UUID.randomUUID().toString().substring(0, 5);
-  }
-  private String getVerificationEmailBody(String email, String name,
-                                          String code) {
-    StringBuilder builder = new StringBuilder();
-
-    return builder.append("Hello")
-        .append(name).append("! Please click link for verification.")
-        .append("http://localhost:8080/join/validate?email" +
-            "=").append(email).append("&code=").append(code).toString();
-  }
-
+  /**
+   * 메일을 통한 검증 메소드
+   */
   public String validCode(String email,String code) {
     signUpService.validUser(email, code);
 
-    return "인증이 성공했습니다.";
+    return VALID_SUCCESS.getMessage();
   }
 }

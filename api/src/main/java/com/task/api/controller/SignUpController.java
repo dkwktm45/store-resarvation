@@ -15,13 +15,18 @@ public class SignUpController {
 
   private final SignUpApplication signUpApplication;
 
+  /**
+   * 회원가입 요청
+   * */
   @PostMapping("")
   public ResponseEntity<String> joinRequest(
       @RequestBody @Valid CreateUser.Request request
       ) {
     return ResponseEntity.ok(signUpApplication.signUpUser(request));
   }
-
+  /**
+   * 가입 인증 요청
+   * */
   @GetMapping("/validate")
   public ResponseEntity<String> validRequest(
       @RequestParam String email,

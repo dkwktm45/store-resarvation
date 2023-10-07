@@ -1,9 +1,9 @@
-package com.task.redis.jwt.client;
+package com.task.noti.jwt.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.task.common.exception.CustomException;
-import com.task.redis.jwt.dto.RefreshToken;
+import com.task.noti.jwt.dto.RefreshToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

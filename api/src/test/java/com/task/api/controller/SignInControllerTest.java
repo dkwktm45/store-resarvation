@@ -54,7 +54,7 @@ class SignInControllerTest {
     map.put("refreshToken", "testRefreshToken");
 
     String content = objectMapper.writeValueAsString(user);
-    given(signInApplication.userLoginToken(any()))
+    given(signInApplication.getTokenByReq(any()))
         .willReturn(map);
 
     // when && then

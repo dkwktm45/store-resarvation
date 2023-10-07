@@ -8,9 +8,9 @@ import com.task.domain.entity.Reservation;
 import com.task.domain.entity.Store;
 import com.task.domain.entity.User;
 import com.task.domain.type.ResType;
-import com.task.redis.dto.MessageForm;
-import com.task.redis.jwt.JwtAuthenticationProvider;
-import com.task.redis.rabbitmq.senderType.SenderPartner;
+import com.task.noti.dto.MessageForm;
+import com.task.noti.jwt.JwtAuthenticationProvider;
+import com.task.noti.rabbitmq.senderType.SenderPartner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 import static com.task.api.dto.message.ResponseType.*;
-import static com.task.redis.dto.MessageForm.Message.PARTNER_REFUSE;
-import static com.task.redis.dto.MessageForm.Message.PARTNER_RES;
+import static com.task.noti.dto.MessageForm.Message.PARTNER_REFUSE;
+import static com.task.noti.dto.MessageForm.Message.PARTNER_RES;
 
 @Service
 @RequiredArgsConstructor
@@ -99,14 +99,14 @@ public class ReservationApplication {
           .storeName(reservation.getStore().getStoreName())
           .reservationId(reservation.getReservationId())
           .reservationCode(reservation.getReservationCode())
-          .message(SUCCESS_MESSAGE.getMessage())
+          .message(RESERVATION_SUCCESS.getMessage())
           .build();
     }
     return ReservationDto.Response.builder()
         .storeName(reservation.getStore().getStoreName())
         .reservationId(reservation.getReservationId())
         .reservationCode(reservation.getReservationCode())
-        .message(CONTINUE_MESSAGE.getMessage())
+        .message(NOT_RESERVATION.getMessage())
         .build();
   }
 }

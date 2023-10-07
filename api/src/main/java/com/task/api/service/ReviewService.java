@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
   private final ReviewRepository reviewRepository;
 
+  /**
+   * 리뷰 생성
+   * */
   @Transactional
   public void createReview(Review review) {
     reviewRepository.save(review);

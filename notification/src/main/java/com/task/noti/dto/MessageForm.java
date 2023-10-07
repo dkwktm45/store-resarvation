@@ -1,8 +1,6 @@
-package com.task.redis.dto;
+package com.task.noti.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.lang.Nullable;
 
 @Data
 @AllArgsConstructor
