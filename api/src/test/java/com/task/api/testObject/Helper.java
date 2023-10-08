@@ -29,7 +29,7 @@ public class Helper {
         .userType(UserType.USER)
         .password("1")
         .verificationCode("1234")
-        .verifyExpiredAt(LocalDateTime.now().plusDays(1))
+        .verifyExpiredAt(LocalDateTime.now().minusDays(1))
         .valid(false)
         .userName("11")
         .email("11@naver.com").build();
@@ -56,7 +56,7 @@ public class Helper {
         .userType(UserType.USER)
         .password("1")
         .verificationCode("1234")
-        .verifyExpiredAt(LocalDateTime.now())
+        .verifyExpiredAt(LocalDateTime.now().plusDays(10))
         .valid(false)
         .userName("11")
         .email("11@naver.com").build();

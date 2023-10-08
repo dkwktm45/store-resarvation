@@ -1,6 +1,7 @@
 package com.task.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.task.api.application.PartnerApplication;
 import com.task.api.dto.CreatePartner;
 import com.task.api.mailgun.MailgunClient;
 import com.task.api.service.PartnerService;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -24,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureDataJpa
+@ActiveProfiles("test")
 @WebMvcTest(value = PartnerControllerTest.class)
 @AutoConfigureMockMvc(addFilters = false)
 class PartnerControllerTest {
@@ -32,6 +35,9 @@ class PartnerControllerTest {
 
   @MockBean
   private PartnerService partnerService;
+
+  @MockBean
+  private PartnerApplication partnerApplication;
 
   @Autowired
   private ObjectMapper objectMapper;

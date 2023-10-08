@@ -12,9 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.task.common.exception.ErrorCode.NOT_FOUND_USER;
+import static com.task.common.exception.ErrorCode.PARTNER_EXIST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,11 +36,12 @@ class PartnerServiceTest {
         .partnerName(partner.getPartnerName())
         .build();
 
-    when(userRepository.existsByEmail(partner.getEmail()))
+    when(partnerRepository.existsByPartnerEmail(partner.getEmail()))
         .thenReturn(true);
-    when(partnerRepository.save(savePartner));
-    // when
+    when(partnerRepository.save(any()))
+        .thenReturn(savePartner);
 
+    // when
     String result = partnerService.createPartner(partner);
     // then
     assertEquals(result,"파트너 가입이 되었습니다.");
@@ -49,14 +51,14 @@ class PartnerServiceTest {
     // given
     CreatePartner.Request partner = Helper.createPartnerRequest();
 
-    when(userRepository.existsByEmail(partner.getEmail()))
+    when(partnerRepository.existsByPartnerEmail(partner.getEmail()))
         .thenReturn(false);
     // when
 
     CustomException exception = assertThrows(CustomException.class,
         () -> partnerService.createPartner(partner));
     // then
-    assertEquals(exception.getErrorCode(),NOT_FOUND_USER);
+    assertEquals(exception.getErrorCode(),PARTNER_EXIST);
   }
 
 }

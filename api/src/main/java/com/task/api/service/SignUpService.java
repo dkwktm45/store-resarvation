@@ -60,7 +60,7 @@ public class SignUpService {
       throw new CustomException(ALREADY_VERIFY);
     }else if (!user.getVerificationCode().equals(code)) {
       throw new CustomException(NOT_EQUALS_CODE);
-    } else if (user.getVerifyExpiredAt().isBefore(LocalDateTime.now())) {
+    } else if (!user.getVerifyExpiredAt().isBefore(LocalDateTime.now())) {
       throw new CustomException(EXPIRED_CODE);
     }
     user.changeValidUser();
