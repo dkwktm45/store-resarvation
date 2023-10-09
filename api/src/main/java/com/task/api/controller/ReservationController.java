@@ -28,13 +28,13 @@ public class ReservationController {
   }
 
   /**
-   * 예약 요청
+   * 예약승인 요청
    * */
   @PutMapping("/change")
   public ResponseEntity<Void> changeRequest(
       @RequestParam Long id
   ) {
-    reservationService.changeStatus(id);
+    reservationApplication.changeStatus(id);
     return ResponseEntity.ok().build();
   }
 

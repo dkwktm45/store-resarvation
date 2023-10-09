@@ -4,6 +4,7 @@ import com.task.api.dto.ReservationDto;
 import com.task.api.service.ReservationService;
 import com.task.api.service.StoreService;
 import com.task.api.service.UserService;
+import com.task.common.exception.CustomException;
 import com.task.domain.entity.Reservation;
 import com.task.domain.entity.Store;
 import com.task.domain.entity.User;
@@ -11,6 +12,7 @@ import com.task.domain.type.ResType;
 import com.task.noti.dto.MessageForm;
 import com.task.noti.jwt.JwtAuthenticationProvider;
 import com.task.noti.rabbitmq.senderType.SenderPartner;
+import com.task.noti.rabbitmq.senderType.SenderUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 import static com.task.api.dto.message.ResponseType.*;
-import static com.task.noti.dto.MessageForm.Message.PARTNER_REFUSE;
-import static com.task.noti.dto.MessageForm.Message.PARTNER_RES;
+import static com.task.common.exception.ErrorCode.RESERVATION_USE_STATUS;
+import static com.task.domain.type.ResType.REFUSE;
+import static com.task.noti.dto.MessageForm.Message.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,7 @@ public class ReservationApplication {
   private final JwtAuthenticationProvider provider;
   private final StoreService storeService;
   private final SenderPartner senderPartner;
+  private final SenderUser senderUser;
   /**
    * 남은 좌석수를 판단하고 예약을 진행하는 메소드
    * - getReservationAndSend : 예약 진행현황을 반환하고, 점주에게 알림이 울리도록 하는 메소드
@@ -61,7 +65,7 @@ public class ReservationApplication {
         Reservation.createEntityAll(user, store, ResType.REFUSE)
     );
 
-    senderPartner.sendMessage(new MessageForm(response.getReservationId(),
+    senderPartner.sendMessage(new MessageForm(
         store.getPartner().getPartnerEmail(), partnerRefuse)
     );
     return response;
@@ -89,7 +93,26 @@ public class ReservationApplication {
       return ADMISSION_IS_POSSIBLE.getMessage();
     }
   }
+  /**
+   * 해당 예약이 적절한지를 판단하고 status 상태를 변경하는 메소드
+   * - changeWaitingSuccess : 거절중인 예약을 승인상태로 변경
+   * - sendMessage : 유저에게 알림
+   * */
+  @Transactional
+  public void changeStatus(Long id) {
+    Reservation reservation = reservationService.getById(id);
+    if (!reservation.getStatus().equals(REFUSE)) {
+      throw new CustomException(RESERVATION_USE_STATUS);
+    }else if (reservation.isReservationCheck()){
+      throw new CustomException(RESERVATION_USE_STATUS);
+    }
 
+    reservation.changeWaitingSuccess();
+    senderUser.sendMessage(
+        new MessageForm(reservation.getUser().getEmail(), USER_SUCCESS)
+    );
+
+  }
   /**
    * ResType 유형에 따른 Entity를 DTO로 변환하는 메소드*/
   private ReservationDto.Response responseByType(Reservation reservation) {

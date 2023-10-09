@@ -49,7 +49,6 @@ public class ReservationService {
   /**
    * 해당 예약이 적절한지를 판단하는 메소드
    * */
-  @Transactional
   public void validReservation(String code, Reservation reservation) {
     // 수락된 예약인지를 판단
     if (!reservation.getStatus().equals(REFUSE)) {
@@ -67,20 +66,6 @@ public class ReservationService {
   }
 
 
-  /**
-   * 해당 예약이 적절한지를 판단하고 status 상태를 변경하는 메소드
-   * */
-  @Transactional
-  public void changeStatus(Long id) {
-    Reservation reservation = getById(id);
-    if (!reservation.getStatus().equals(REFUSE)) {
-      throw new CustomException(RESERVATION_USE_STATUS);
-    }else if (reservation.isReservationCheck()){
-      throw new CustomException(RESERVATION_USE_STATUS);
-    }
-
-    reservation.changeWaitingSuccess();
-  }
 
   /**
    * 리뷰를 작성할 수 있는지를 판단하는 메소드 

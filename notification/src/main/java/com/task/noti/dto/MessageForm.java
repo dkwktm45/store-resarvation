@@ -7,12 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 public class MessageForm {
 
-  private Long id;
   private String email;
   private Message message;
-
-
-
 
   @NoArgsConstructor
   @Getter
