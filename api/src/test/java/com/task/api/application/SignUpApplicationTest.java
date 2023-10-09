@@ -1,5 +1,6 @@
 package com.task.api.application;
 
+import com.task.api.application.utill.SignUpAppUtil;
 import com.task.api.dto.CreateUser;
 import com.task.api.mailgun.MailgunClient;
 import com.task.api.service.SignUpService;
@@ -27,6 +28,9 @@ class SignUpApplicationTest {
   private SignUpService signUpService;
 
   @Mock
+  private SignUpAppUtil signUpAppUtil;
+
+  @Mock
   private MailgunClient mailgunClient;
 
   @InjectMocks
@@ -51,20 +55,24 @@ class SignUpApplicationTest {
     // given
     CreateUser.Request req = Helper.createUserRequest();
     User user = Helper.createUser();
-
+    String code = "1234";
     // when
     when(signUpService.isEmailExist(any()))
         .thenReturn(false);
     when(signUpService.createUser(any()))
         .thenReturn(user);
+    when(signUpAppUtil.getRandomCode())
+        .thenReturn(code);
     when(mailgunClient.sendMail(any())).thenReturn(null);
-    doNothing().when(signUpService).changeUserValidateEmail(any(), anyString());
+    doNothing().when(signUpService).changeUserValidateEmail(any(),anyString());
 
     String message = signUpApplication.signUpUser(req);
     // then
     verify(signUpService).isEmailExist(any());
     verify(signUpService).createUser(any());
     verify(mailgunClient).sendMail(any());
+    verify(signUpAppUtil).getRandomCode();
+    verify(signUpAppUtil).getVerificationEmailBody(any(), any(), any());
     verify(signUpService).changeUserValidateEmail(any(), anyString());
     assertEquals(message, JOIN_USER.getMessage());
   }
