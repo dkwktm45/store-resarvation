@@ -55,7 +55,7 @@ public class Reservation {
         .build();
   }
   private static LocalDateTime getLimitTime() {
-    return LocalDateTime.now().plusHours(2);
+    return LocalDateTime.now().plusMinutes(2);
   }
 
   private static String getRandomCode() {
