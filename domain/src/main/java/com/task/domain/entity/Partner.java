@@ -21,6 +21,7 @@ public class Partner {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long partnerId;
   private String partnerName;
+  @Column(unique = true)
   private String partnerEmail;
 
   @JsonManagedReference
